@@ -6,7 +6,10 @@
       </el-header>
       
       <el-container>
-        <Aside />
+        <keep-alive>
+          <Aside />
+        </keep-alive>
+        
         <Main/>
       </el-container>
     </el-container>

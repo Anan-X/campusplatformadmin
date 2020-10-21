@@ -146,3 +146,21 @@ export function apiAddCourse(data,teacher_id) {
     }
   })
 }
+// 修改课表
+export function apiEditCourse(data) {
+  return request ({
+    url: '/backstageUsers/editcourse',
+    method: 'post',
+    data
+  })
+}
+// 修改课表
+export function apiDeleteCourse(course_id) {
+  return request ({
+    url: '/backstageUsers/deletecourse',
+    method: 'get',
+    params: {
+      course_id
+    }
+  })
+}

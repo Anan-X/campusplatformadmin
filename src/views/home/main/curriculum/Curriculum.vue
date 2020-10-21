@@ -22,13 +22,14 @@
     </el-select>
     <!-- 添加课程 -->
     <el-button id="addbtn" @click="addCourse">添加课程</el-button>
-    <add-curriculum 
-    :dialog="dialog"
-    :freetime_id="freetime_id"
-    :day="value2"
-    :weekth="value"
-    @closeDialog="closeDialog"
-    @refreshCourse ="getCourse" />
+    <add-curriculum
+      :dialog="dialog"
+      :freetime_id="freetime_id"
+      :day="value2"
+      :weekth="value"
+      @closeDialog="closeDialog"
+      @refreshCourse="getCourse"
+    />
     <!-- 展示 课表 -->
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="time_id" label="课次" width="100">
@@ -57,12 +58,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 编辑课表页面 -->
+    <edit-curriculum
+      :dialog="dialogEdit"
+      @closeDialog="closeDialogEdit"
+      @refreshCourse="getCourse"
+      v-if="dialogEdit"
+      :formEdit="formEdit"
+      :freetime_id="freetime_id"
+    />
   </div>
 </template>
 
 <script>
-import { apiGetCourse } from "network/user";
-import AddCurriculum from './child/AddCurriculum'
+import { apiGetCourse, apiDeleteCourse } from "network/user";
+import AddCurriculum from "./child/AddCurriculum";
+import EditCurriculum from "./child/EditCurriculum";
 export default {
   data() {
     return {
@@ -116,13 +127,16 @@ export default {
       value: "1",
       value2: "1",
       day: [], // 记录今天的课次
-      freetime_id: [],//记录今天没有课的课次
-      number: ['1', '2', '3', '4', '5', '6', '7', '8'],
-      dialog: false   // 控制添加课程页面显示
+      freetime_id: [], //记录今天没有课的课次
+      number: ["1", "2", "3", "4", "5", "6", "7", "8"],
+      dialog: false, // 控制添加课程页面显示
+      dialogEdit: false, // 控制编辑课程页面显示
+      formEdit: {}, // 编辑课程的数据
     };
   },
   components: {
-    AddCurriculum
+    AddCurriculum,
+    EditCurriculum,
   },
   methods: {
     // 获取课程表
@@ -159,11 +173,38 @@ export default {
     },
     // 修改按钮事件
     handleEdit(index, row) {
+      // 筛选没课的课次
+      this.day = [];
+      this.tableData.forEach((item) => {
+        this.day.push(item.time_id);
+      });
+      this.freetime_id = this.getArrDifference(this.day, this.number);
+      this.freetime_id.push(row.time_id);
+      this.dialogEdit = true;
       console.log(index, row);
+      this.formEdit = row;
     },
     // 删除按钮事件
     handleDelete(index, row) {
-      console.log(index, row);
+      this.$messagebox
+        .confirm("确定要删除吗？")
+        .then(() => {
+          apiDeleteCourse(row.course_id).then((res) => {
+            if (res.data.code === 200) {
+              this.$message(res.data.msg);
+              this.getCourse();
+            } else {
+              this.$message(res.data.msg);
+            }
+          });
+        })
+        .catch(() => {});
+    },
+    // 筛选没课的课次
+    getArrDifference(arr1, arr2) {
+      return arr1.concat(arr2).filter(function (v, i, arr) {
+        return arr.indexOf(v) === arr.lastIndexOf(v);
+      });
     },
     // 添加课程
     addCourse() {
@@ -172,23 +213,22 @@ export default {
         this.day.push(item.time_id);
       });
       // 筛选没课的课次
-      function getArrDifference(arr1, arr2) {
-        return arr1.concat(arr2).filter(function (v, i, arr) {
-          return arr.indexOf(v) === arr.lastIndexOf(v);
-        });
-      }
-      this.freetime_id = getArrDifference(this.day, this.number)
+      this.freetime_id = this.getArrDifference(this.day, this.number);
       // 判读今天课满了没
-      if(this.freetime_id.length===0){
-        this.$message('今天课程已满，请另择日');
-      }else{
-        this.dialog = true
+      if (this.freetime_id.length === 0) {
+        this.$message("今天课程已满，请另择日");
+      } else {
+        this.dialog = true;
       }
     },
-    // 关闭Dialog
+    // 关闭添加课程页面
     closeDialog() {
-      this.dialog = false
-    }
+      this.dialog = false;
+    },
+    // 关闭编辑课程页面
+    closeDialogEdit() {
+      this.dialogEdit = false;
+    },
   },
   // 获取课程表
   created() {

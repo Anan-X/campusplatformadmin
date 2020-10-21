@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="12">
-        <el-select style="padding-bottom: 10px" v-model="value" :label="label" @change="getScore">
+        <el-select style="padding-bottom: 10px" v-model="value" @change="getScore">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
@@ -64,8 +64,7 @@
         isShow: false,
         course: '',
         options: [],
-        value: '1',
-        label: '2019-2020-第一学期'
+        value: 1
       }
     },
     methods: {
