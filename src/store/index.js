@@ -8,7 +8,8 @@ const store = new Vuex.Store({
     userInfo: null,
     myInfo: null,
     token: '',
-    admin:false
+    admin:false,
+    role: ''
   },
   mutations: {
     loginAfter (state, payload) {
@@ -16,6 +17,8 @@ const store = new Vuex.Store({
       state.myInfo = payload.data.myInfo
       state.token = payload.data.token
       state.admin = true
+      state.role = payload.data.info.role
+
       // 把token储存在localStorage中
       localStorage.setItem('token',state.token)
     },
@@ -23,6 +26,7 @@ const store = new Vuex.Store({
       state.userInfo = null
       state.myInfo = null
       state.token = ''
+      state.role = ''
       state.admin = false
       localStorage.removeItem('token')
       sessionStorage.removeItem('store')

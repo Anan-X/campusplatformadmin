@@ -24,7 +24,9 @@ import {
   Dialog,
   Select,
   Option,
-  Drawer
+  Drawer,
+  Radio,
+  Switch
 } from 'element-ui';
 
 Vue.use(Button)
@@ -49,6 +51,8 @@ Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Drawer)
+Vue.use(Radio)
+Vue.use(Switch)
 
 
 Vue.prototype.$message = Message
