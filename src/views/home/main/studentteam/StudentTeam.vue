@@ -131,6 +131,8 @@ export default {
         if (res.data.code === 200) {
           this.tableData = res.data.students;
           this.isShow = true;
+        }else {
+          this.$message.error(res.data.msg)
         }
       });
     },
@@ -140,6 +142,8 @@ export default {
         if (res.data.code === 200) {
           this.tableData = res.data.students;
           this.isShow = true;
+        }else {
+          this.$message.error(res.data.msg)
         }
       });
     },

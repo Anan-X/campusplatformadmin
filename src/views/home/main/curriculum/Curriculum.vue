@@ -101,6 +101,66 @@ export default {
           value: "5",
           label: "第五周",
         },
+        {
+          value: "6",
+          label: "第六周",
+        },
+        {
+          value: "7",
+          label: "第七周",
+        },
+        {
+          value: "8",
+          label: "第八周",
+        },
+        {
+          value: "9",
+          label: "第九周",
+        },
+        {
+          value: "10",
+          label: "第十周",
+        },
+        {
+          value: "11",
+          label: "第十一周",
+        },
+        {
+          value: "12",
+          label: "第十二周",
+        },
+        {
+          value: "13",
+          label: "第十三周",
+        },
+        {
+          value: "14",
+          label: "第十四周",
+        },
+        {
+          value: "15",
+          label: "第十五周",
+        },
+        {
+          value: "16",
+          label: "第十六周",
+        },
+        {
+          value: "17",
+          label: "第十七周",
+        },
+        {
+          value: "18",
+          label: "第十八周",
+        },
+        {
+          value: "19",
+          label: "第十九周",
+        },
+        {
+          value: "20",
+          label: "第二十周",
+        },
       ],
       optionsDay: [
         {

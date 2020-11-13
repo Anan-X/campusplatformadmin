@@ -2,7 +2,10 @@
   <div class="aside">
     <el-card>
       <div slot="header">
-        <h3>登陆</h3>
+        <el-row>
+          <el-col :span="8"><h3>登陆</h3></el-col>
+          <el-col :span="16" style="text-align:right;"><router-link to="/register">注册</router-link></el-col>
+        </el-row>
       </div>
       <div>
         <!-- 登录方式 -->
@@ -22,8 +25,6 @@
           <el-form-item>
             <el-button style="width:100%;" type="primary" @click="passSubmitForm('passRuleForm')">登陆</el-button>
           </el-form-item>
-          
-
         </el-form>
         <!-- 手机号登陆 -->
         <el-form v-else :model="phoneRuleForm" status-icon :rules="rules" ref="phoneRuleForm" label-position="top" label-width="80px">
@@ -47,6 +48,7 @@
             <el-button style="width:100%;" type="primary" @click="phoneSubmitForm('phoneRuleForm')">登陆</el-button>
           </el-form-item>
         </el-form>
+
       </div>
     </el-card>
   </div>
@@ -191,7 +193,7 @@
 <style scoped>
   .aside {
 
-    height: 60vh;
+    height: 62vh;
     position: relative;
     top: 20px;
     padding-left: 10px;

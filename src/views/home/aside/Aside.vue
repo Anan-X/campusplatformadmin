@@ -2,12 +2,13 @@
   <el-aside class="aside">
     <!-- 教师页面导航 -->
     <el-menu
-      default-active="0"
+      :default-active="navIndex"
+      :active="navIndex"
       class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      v-if="this.$store.role=='teacher'"
+      v-if="this.$store.state.role == 'teacher'"
     >
       <router-link
         v-for="(item, index) in teacherNav"
@@ -64,10 +65,36 @@ export default {
         { 教师成员管理: "/home/teacherteam" },
         { 学生成员管理: "/home/studentteam" },
         { 系统用户管理: "/home/userteam" },
+        { 科目管理: "/home/subject" },
       ],
+      navIndex: '0'
     };
   },
   methods: {},
+  created() {
+    let navArr = []
+    if (this.$store.state.role == "teacher") {
+      navArr = this.teacherNav
+      for (let i = 0; i < navArr.length; i++) {
+        if (Object.values(navArr[i]) == this.$route.path) {
+          console.log(i)
+          this.navIndex = i
+        }
+      }
+    } else {
+      navArr = this.adminNav
+      for (let i = 0; i < navArr.length; i++) {
+        if (Object.values(navArr[i]) == this.$route.path) {
+          console.log(i)
+          this.navIndex = i
+        }
+      }
+    }
+
+    // console.log(navArr)
+    // console.log(this.$route.path)
+    // console.log(this.$refs.menu)
+  },
 };
 </script>
 

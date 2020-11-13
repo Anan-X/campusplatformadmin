@@ -24,8 +24,13 @@ const StudentAdd = ()=> import('views/home/main/studentteam/child/StudentAdd')
 const UserTeam = ()=> import('views/home/main/userteam/UserTeam')
 const UserEdit = ()=> import('views/home/main/userteam/child/UserEdit')
 
+const Subject = ()=> import('views/home/main/subject/Subject')
+
+
 
 const Login = () => import('../views/login/Login.vue')
+const Register = () => import('../views/register/Register.vue')
+const Editpass = ()=> import('views/editpass/EditPass')
 
 
 const routes = [
@@ -106,12 +111,25 @@ const routes = [
         name: 'useredit',
         component: UserEdit
       },
+      {
+        path: 'subject',
+        name: 'subject',
+        component: Subject
+      },
     ]
   },
   {
     path: '/login',
     component: Login
-  }
+  },
+  {
+    path: '/register',
+    component: Register
+  },
+  {
+    path: '/editpass',
+    component: Editpass
+  },
 ]
 
 const router = new VueRouter({
@@ -123,7 +141,7 @@ router.beforeEach((to, from, next) => {
   // 判断用户是否登陆
   if(localStorage.getItem('token')===''||localStorage.getItem('token')===null)
   {
-    if(to.path === '/login'){
+    if(to.path === '/login'||to.path === '/register'){
       return next()
     }
     return next('/login')

@@ -24,7 +24,43 @@ export function getPhoneCode (phone) {
     params: {
       phone
     }
-  },'instance')
+  })
+}
+// 判断该学工号能否注册
+export function isTeacher (teacher_id) {
+  return request({
+    url: '/backstageUsers/is_teacher',
+    method: 'get',
+    params: {
+      teacher_id
+    }
+  })
+}
+// 判断该手机号能否注册
+export function isPhone (phone) {
+  return request({
+    url: '/backstageUsers/is_phone',
+    method: 'get',
+    params: {
+      phone
+    }
+  })
+}
+// 注册
+export function Register(data) {
+  return request({
+    url: '/backstageUsers/register',
+    method: 'post',
+    data
+  })
+}
+// 修改密码
+export function Password(data) {
+  return request({
+    url: '/backstageUsers/password',
+    method: 'post',
+    data
+  })
 }
 
 // 获取班级成员请求
@@ -363,13 +399,56 @@ export function apiUserAdmin(user) {
     }
   })
 }
-// 修改用户状态  （账号冻结）
+// 删除用户
 export function apiUserDelete(user_id) {
   return request({
     url:'/backstageUsers/user_delete',
     method:'post',
     data: {
       user_id
+    }
+  })
+}
+// 获取科目信息
+export function apiGetSubject() {
+  return request({
+    url:'/backstageUsers/subject',
+    method:'get'
+  })
+}
+// 添加科目
+export function apiAddSubject(data) {
+  return request({
+    url:'/backstageUsers/subject_add',
+    method:'post',
+    data
+  })
+}
+// 修改科目
+export function apiEditSubject(data) {
+  return request({
+    url:'/backstageUsers/subject_edit',
+    method:'post',
+    data
+  })
+}
+// 获取科目  根据科目名称
+export function apiSubjectName(subjectname) {
+  return request({
+    url:'/backstageUsers/subject_name',
+    method:'get',
+    params:{
+      subjectname
+    }
+  })
+}
+// 获取科目  根据任课老师姓名
+export function apiSubjectTeacher(name) {
+  return request({
+    url:'/backstageUsers/subject_teacher_name',
+    method:'get',
+    params:{
+      name
     }
   })
 }

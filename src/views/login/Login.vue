@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container id="login_div">
     <el-header>
       <Header/>
     </el-header>
@@ -73,5 +73,8 @@ export default {
   }
   .el-aside{
     padding: 0;
+  }
+  #login_div {
+    height: 100vh;
   }
 </style>

@@ -76,7 +76,7 @@ import {
   apiGetTeacher,
   apiTeacherIdFind,
   apiTeacherNameFind,
-  apiTeacherDelete
+  apiTeacherDelete,
 } from "network/user";
 export default {
   data() {
@@ -109,6 +109,8 @@ export default {
         if (res.data.code === 200) {
           this.tableData = res.data.teachers;
           this.isShow = true;
+        }else {
+          this.$message.error(res.data.msg)
         }
       });
     },
@@ -118,6 +120,8 @@ export default {
         if (res.data.code === 200) {
           this.tableData = res.data.teachers;
           this.isShow = true;
+        }else {
+          this.$message.error(res.data.msg)
         }
       });
     },
@@ -137,18 +141,23 @@ export default {
     },
     // 删除教师档案
     teacherDelete(index, row) {
-      apiTeacherDelete(row.teacher_id).then(res => {
-        if(res.data.code === 200){
-          this.$message({
-            message: res.data.msg,
-            type: 'success'
-          })
-          this.getTeacher()
-        } else {
-          this.$message.error(res.data.msg)
-        }
-      })
-    }
+      this.$messagebox
+        .confirm("确定要删除吗？")
+        .then(() => {
+          apiTeacherDelete(row.teacher_id).then((res) => {
+            if (res.data.code === 200) {
+              this.$message({
+                message: res.data.msg,
+                type: "success",
+              });
+              this.getTeacher();
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          });
+        })
+        .catch(() => {});
+    },
   },
   created() {
     // 获取教师成员
